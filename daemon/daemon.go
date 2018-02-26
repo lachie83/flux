@@ -79,7 +79,10 @@ func (d *Daemon) ListServices(ctx context.Context, namespace string) ([]flux.Con
 		services, err = d.Manifests.ServicesWithPolicies(checkout.ManifestDir())
 		return err
 	})
-	if err != nil {
+	switch {
+	case err == git.ErrNotReady:
+		services = policy.ResourceMap{}
+	case err != nil:
 		return nil, errors.Wrap(err, "getting service policies")
 	}
 

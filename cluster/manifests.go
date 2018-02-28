@@ -21,7 +21,7 @@ type Manifests interface {
 	// spec given.
 	UpdateDefinition(def []byte, container string, newImageID image.Ref) ([]byte, error)
 	// Load all the resource manifests under the path given
-	LoadManifests(paths ...string) (map[string]resource.Resource, error)
+	LoadManifests(base, first string, rest ...string) (map[string]resource.Resource, error)
 	// Parse the manifests given in an exported blob
 	ParseManifests([]byte) (map[string]resource.Resource, error)
 	// UpdatePolicies modifies a manifest to apply the policy update specified
